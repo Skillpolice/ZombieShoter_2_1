@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - Zombie
+  - BulletPlayer
+  - BulletEnemy
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - Zombie
+  - Player
+  - Enemy
+  - BulletPlayer
+  - BulletEnemy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Ground
+    uniqueID: 870322627
+    locked: 0
+  - name: BulletLaerOut
+    uniqueID: 1963675757
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0

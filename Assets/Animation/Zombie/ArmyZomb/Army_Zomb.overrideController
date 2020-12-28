@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Army_Zomb
+  m_Controller: {fileID: 9100000, guid: 2671b4523a8ebac4eaeef9298da9867a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 15e0b6a45e7fcb24782fc76ca311c12e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d2bcac94194b8314d9713db89c666a04, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 871f5e93d0d29dc4fa90f18d4b0e96fd, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bc1e63d1aa0ec874780a777b18f6d481, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 2f65c8e4875522749b97cb56e331d04b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 19ff45bc3c1247144b52c3d2a0000937, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c141f1924681de74599c3ded7a8ac86c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ced0beec4e66e82488a47f50b12edf52, type: 2}
