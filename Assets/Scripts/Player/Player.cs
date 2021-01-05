@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     [Header("Text")]
     public Text playerHealthText;
+    public Text playerMoneyText;
 
     [Header("Bullet Obj")]
     public Bullet bulletPrefab;
@@ -26,7 +27,10 @@ public class Player : MonoBehaviour
     [Header("Player")]
     public int healthPlayer;
 
-    float nextFire; //сколько прошло времени от предыдущего выстрела
+    public int scoreMoney;
+
+    float nextFire; //сколько прошло времени от предыдущего выстрела\
+
 
     private void Awake()
     {
@@ -40,6 +44,8 @@ public class Player : MonoBehaviour
         zombie = FindObjectOfType<Zombie>();
 
         playerHealthText.text = "Player: " + healthPlayer.ToString();
+        playerMoneyText.text = "Money: " + scoreMoney.ToString();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
@@ -92,6 +98,12 @@ public class Player : MonoBehaviour
             coll2D.enabled = false;
         }
 
+    }
+
+    public void AddMoney(int money)
+    {
+        scoreMoney += money;
+        playerMoneyText.text = "Money: " + scoreMoney.ToString();
     }
 
 }

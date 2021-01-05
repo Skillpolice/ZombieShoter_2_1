@@ -10,6 +10,21 @@ public class GameManager : MonoBehaviour
     public Text textTimer;
     public int resGame;
 
+
+    private void Awake()
+    {
+        GameManager[] gameManagers = FindObjectsOfType<GameManager>();
+        for (int i = 0; i < gameManagers.Length; i++)
+        {
+            if (gameManagers[i].gameObject != gameObject)
+            {
+                Destroy(gameObject);
+                gameObject.SetActive(false);
+                break;
+            }
+        }
+    }
+
     public void RestartGame()
     {
         gameOverPanel.SetActive(true);

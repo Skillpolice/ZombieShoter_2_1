@@ -16,6 +16,7 @@ public class Zombie : MonoBehaviour
     public float saveZone = 17f;
 
     [Header("Zombie")]
+    public GameObject pickaupPrefab;
     public int healthZombie = 100;
     public float hitRotate;
     public int bullDamageZombie;
@@ -42,7 +43,6 @@ public class Zombie : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<Player>();
-
         startPosZombie = transform.position; //запоменаем стартовую позицию зомби
 
         ChangeState(ZombieState.STAND); //Делаем активный стейт
@@ -68,6 +68,7 @@ public class Zombie : MonoBehaviour
         {
             animator.SetTrigger("Death");
             coll2D.enabled = false;
+            Instantiate(pickaupPrefab, transform.position, Quaternion.identity);
             return;
         }
     }
@@ -188,6 +189,7 @@ public class Zombie : MonoBehaviour
             return;
         }
         player.UpdateHealth(bullDamageZombie);
+        print("attack");
     }
 
 
