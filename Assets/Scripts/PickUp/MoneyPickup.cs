@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class MoneyPickup : MonoBehaviour
 {
-    Player player;
+    GameManager  gameManager;
     public int addMoney;
 
     private void ApplyEffect()
     {
-        player = FindObjectOfType<Player>();
-        player.scoreMoney += addMoney;
-        player.playerMoneyText.text = "Moneys: " + player.scoreMoney.ToString();
+        gameManager = FindObjectOfType<GameManager>();
+        gameManager.AddMoney(addMoney);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

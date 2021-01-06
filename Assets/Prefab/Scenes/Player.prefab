@@ -144,11 +144,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealthText: {fileID: 0}
+  playerMoneyText: {fileID: 0}
   bulletPrefab: {fileID: 8930928132991509566, guid: fdeb6b3c72a18864aa65bf9dc63a6629, type: 3}
   shootPosBullet: {fileID: 3549941427743506756}
   fireRotate: 0.2
-  bullDamagePlayer: 13
+  bullDamagePlayer: 20
   healthPlayer: 100
+  scoreMoney: 0
 --- !u!50 &3549941428205346125
 Rigidbody2D:
   serializedVersion: 4

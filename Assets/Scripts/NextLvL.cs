@@ -16,8 +16,7 @@ public class NextLvL : MonoBehaviour
         healthBoss-= player.bullDamagePlayer;
         if(healthBoss <= 0)
         {
-            index = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(index + 1);
+            LoadScene();
         }
 
     }
@@ -25,10 +24,15 @@ public class NextLvL : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            index = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(index + 1);
+            LoadScene();
         }
 
         ApplyEffect();
+    }
+
+    private void LoadScene()
+    {
+        index = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(index + 1);
     }
 }

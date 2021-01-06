@@ -114,8 +114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRadius: 4
-  moveRadius: 10
-  saveZone: 17
+  moveRadius: 16.26
+  saveZone: 21.41
+  pickaupPrefab: {fileID: 0}
   healthZombie: 100
   hitRotate: 1
   bullDamageZombie: 10
@@ -169,7 +170,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

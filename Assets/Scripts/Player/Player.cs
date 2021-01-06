@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
 
     [Header("Text")]
     public Text playerHealthText;
-    public Text playerMoneyText;
 
     [Header("Bullet Obj")]
     public Bullet bulletPrefab;
@@ -27,8 +26,6 @@ public class Player : MonoBehaviour
     [Header("Player")]
     public int healthPlayer;
 
-    public int scoreMoney;
-
     float nextFire; //сколько прошло времени от предыдущего выстрела\
 
 
@@ -36,20 +33,19 @@ public class Player : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         coll2D = GetComponent<CircleCollider2D>();
+        gameManager = GetComponent<GameManager>();
     }
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
         enemy = FindObjectOfType<Enemy>();
         zombie = FindObjectOfType<Zombie>();
 
         playerHealthText.text = "Player: " + healthPlayer.ToString();
-        playerMoneyText.text = "Money: " + scoreMoney.ToString();
-        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
+        //Debug.DrawRay(transform.position, (shootPosBullet.transform.position - transform.position) * 10, Color.green);
         CheckFire();
     }
 
@@ -59,7 +55,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1") && nextFire <= 0)
             {
-                Attack();
+                Shoot();
             }
             if (nextFire > 0)
             {
@@ -72,7 +68,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void Shoot()
     {
         Instantiate(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идем выстрел и нужное вращение
         nextFire = fireRotate;
@@ -98,12 +94,6 @@ public class Player : MonoBehaviour
             coll2D.enabled = false;
         }
 
-    }
-
-    public void AddMoney(int money)
-    {
-        scoreMoney += money;
-        playerMoneyText.text = "Money: " + scoreMoney.ToString();
     }
 
 }

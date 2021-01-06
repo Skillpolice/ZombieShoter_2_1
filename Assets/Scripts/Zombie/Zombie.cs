@@ -24,7 +24,7 @@ public class Zombie : MonoBehaviour
 
 
     Vector3 startPosZombie;
-    float dictanceToPlayer;
+    float distanceToPlayer;
 
     ZombieState activeState;
     enum ZombieState //проверка состояний зомби
@@ -63,7 +63,7 @@ public class Zombie : MonoBehaviour
     public void UpdateHealth(int amount)
     {
         healthZombie -= amount;
-    
+
         if (healthZombie <= 0)
         {
             animator.SetTrigger("Death");
@@ -76,7 +76,7 @@ public class Zombie : MonoBehaviour
 
     public void DistanceZombie()
     {
-        dictanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         if (healthZombie > 0)
         {
@@ -130,36 +130,57 @@ public class Zombie : MonoBehaviour
 
     private void DoStand()
     {
-        if (dictanceToPlayer < moveRadius)
-        {
-            ChangeState(ZombieState.MOVE_TO_PLAYER);
-        }
+        CheckMoveToPlayer();
     }
 
     private void DoReturn()
     {
-        if (dictanceToPlayer < moveRadius)
+        if (CheckMoveToPlayer())
         {
-            ChangeState(ZombieState.MOVE_TO_PLAYER);
             return;
         }
 
         float distanseToStart = Vector3.Distance(transform.position, startPosZombie);
         if (distanseToStart <= 0.1f)
         {
-            ChangeState(ZombieState.MOVE_TO_PLAYER);
+            ChangeState(ZombieState.STAND);
             return;
         }
     }
 
+    private bool CheckMoveToPlayer()
+    {
+        //проверяем радиус
+        if (distanceToPlayer > moveRadius)
+        {
+            return false;
+        }
+
+        //проверяем препядствия
+        Vector3 directionToPlayer = player.transform.position - transform.position; //получаем направление от зомби к игроку
+        Debug.DrawRay(transform.position, directionToPlayer, Color.red); //Рисует линию от точки А до точки B
+
+        LayerMask layerMask = LayerMask.GetMask("Walls");
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, directionToPlayer.magnitude, layerMask);
+        if (hit.collider != null) //проверка на столкновение с преградой
+        {
+            //есть коллайдер
+            return false;
+        }
+
+        //бежать за игроком
+        ChangeState(ZombieState.MOVE_TO_PLAYER);
+        return true;
+    }
+
     private void DoMove()
     {
-        if (dictanceToPlayer < attackRadius)
+        if (distanceToPlayer < attackRadius)
         {
             ChangeState(ZombieState.ATTACK);
             return;
         }
-        if (dictanceToPlayer > saveZone)
+        if (distanceToPlayer > saveZone)
         {
             ChangeState(ZombieState.RETURN);
             return;
@@ -168,7 +189,7 @@ public class Zombie : MonoBehaviour
     }
     private void DoAttack()
     {
-        if (dictanceToPlayer > attackRadius)
+        if (distanceToPlayer > attackRadius)
         {
             ChangeState(ZombieState.MOVE_TO_PLAYER);
             return;
@@ -184,7 +205,7 @@ public class Zombie : MonoBehaviour
 
     private void DamageToPlayer()
     {
-        if (dictanceToPlayer > attackRadius)
+        if (distanceToPlayer > attackRadius)
         {
             return;
         }

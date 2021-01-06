@@ -7,11 +7,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject gameOverPanel;
+
+    [Header("Text")]
     public Text textTimer;
+    public Text playerMoneyText;
+
     public int resGame;
+    public int scoreMoney;
 
-
-    private void Awake()
+    public void Awake()
     {
         GameManager[] gameManagers = FindObjectsOfType<GameManager>();
         for (int i = 0; i < gameManagers.Length; i++)
@@ -23,6 +27,18 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private void Start()
+    {
+        playerMoneyText.text = "Money: 000";
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void AddMoney(int money)
+    {
+        scoreMoney += money;
+        playerMoneyText.text = "Money: " + scoreMoney.ToString();
     }
 
     public void RestartGame()

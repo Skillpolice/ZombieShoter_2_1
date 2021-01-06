@@ -21,8 +21,11 @@ public class BombBurrel : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //TODO check tag Bullet
+        if (collision.gameObject.CompareTag("BulletPlayer"))
+        {
 
-        Explode();
+            Explode();
+        }
     }
 
     private void Explode()
