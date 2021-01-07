@@ -80,7 +80,6 @@ public class Zombie : MonoBehaviour
     public void DistanceZombie()
     {
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-
         if (healthZombie > 0)
         {
             switch (activeState)
@@ -113,23 +112,19 @@ public class Zombie : MonoBehaviour
         {
             case ZombieState.STAND:
                 movement.enabled = false;
-                //zombiePatrol.enabled = true;
                 break;
 
             case ZombieState.MOVE_TO_PLAYER:
                 movement.enabled = true;
-                //zombiePatrol.enabled = false;
                 break;
 
             case ZombieState.ATTACK:
                 movement.enabled = false;
-                //zombiePatrol.enabled = false;
                 break;
 
             case ZombieState.RETURN:
                 movement.targetPos = startPosZombie;
                 movement.enabled = true;
-                //zombiePatrol.enabled = true;
                 break;
         }
         activeState = newState;
@@ -196,17 +191,20 @@ public class Zombie : MonoBehaviour
     }
     private void DoAttack()
     {
-        if (distanceToPlayer > attackRadius)
+        if(player.healthPlayer > 0)
         {
-            ChangeState(ZombieState.MOVE_TO_PLAYER);
-            return;
-        }
+            if (distanceToPlayer > attackRadius)
+            {
+                ChangeState(ZombieState.MOVE_TO_PLAYER);
+                return;
+            }
 
-        hitNexAttack -= Time.deltaTime;
-        if (hitNexAttack < 0)
-        {
-            animator.SetTrigger("Attack");
-            hitNexAttack = hitRotate;
+            hitNexAttack -= Time.deltaTime;
+            if (hitNexAttack < 0)
+            {
+                animator.SetTrigger("Attack");
+                hitNexAttack = hitRotate;
+            }
         }
     }
 

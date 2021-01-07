@@ -423,6 +423,7 @@ RectTransform:
   - {fileID: 8725761747759554519}
   - {fileID: 3831048888419450406}
   - {fileID: 3697885710738641030}
+  - {fileID: 405444367733151818}
   m_Father: {fileID: 3549941428205346120}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -654,13 +655,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerHealthText: {fileID: 0}
   playerAmmo: {fileID: 6843320846149520519}
+  reloadAmmo: {fileID: 7441534361534531641}
   bulletPrefab: {fileID: 8930928132991509566, guid: fdeb6b3c72a18864aa65bf9dc63a6629, type: 3}
   shootPosBullet: {fileID: 3549941427743506756}
   fireRotate: 0
   bullDamagePlayer: 20
   maxAmmo: 15
   maxClips: 2
-  reloadTime: 2
+  reloadTime: 1.2
   currenAmmo: -1
   healthPlayer: 100
 --- !u!95 &3549941428205346135
@@ -753,8 +755,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 786.49, y: -502.24}
-  m_SizeDelta: {x: 347.02, y: 75.518}
+  m_AnchoredPosition: {x: 781.8, y: -502.24}
+  m_SizeDelta: {x: 194.573, y: 75.518}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6925440829364618256
 CanvasRenderer:
@@ -786,7 +788,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 173f9a3c8b6fe4b4db9544a0f75a8bf4, type: 3}
-    m_FontSize: 40
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -887,6 +889,105 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &4820222663259872560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 405444367733151818}
+  - component: {fileID: 9123693578492510662}
+  - component: {fileID: 7441534361534531641}
+  - component: {fileID: 7264041569062945717}
+  m_Layer: 5
+  m_Name: Reload Gun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &405444367733151818
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4820222663259872560}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 35228155996044273}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 786.24, y: -358.50073}
+  m_SizeDelta: {x: 321.2218, y: 58.0386}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9123693578492510662
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4820222663259872560}
+  m_CullTransparentMesh: 1
+--- !u!114 &7441534361534531641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4820222663259872560}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9811321, g: 0.0509078, b: 0.0509078, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 37
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Reload: R'
+--- !u!95 &7264041569062945717
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4820222663259872560}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4c36331aa2be04942902765cef6fab0c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7484228238908714365
 GameObject:
   m_ObjectHideFlags: 0

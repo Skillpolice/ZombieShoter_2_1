@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [Header("Text")]
     public Text playerHealthText;
     public Text playerAmmo;
+    public Text reloadAmmo;
 
     [Header("Bullet Obj")]
     public Bullet bulletPrefab;
@@ -50,13 +51,13 @@ public class Player : MonoBehaviour
         currenAmmo = maxAmmo;
 
         playerHealthText.text = "Player: " + healthPlayer.ToString();
-        playerAmmo.text = "Ammo: " + currenAmmo + " / " + maxClips.ToString();
+        playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
     }
 
     private void Update()
     {
         //Debug.DrawRay(transform.position, (shootPosBullet.transform.position - transform.position) * 10, Color.green);
-       
+
         CheckFire();
     }
 
@@ -70,7 +71,12 @@ public class Player : MonoBehaviour
             }
             if (currenAmmo <= 0)
             {
-                StartCoroutine(ReloadFire());
+                reloadAmmo.enabled = true;
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    StartCoroutine(ReloadFire());
+                    return;
+                }
                 return;
             }
             if (maxClips < 0)
@@ -104,16 +110,17 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(reloadTime);
 
-        playerAmmo.text = "Ammo: " + currenAmmo + " / " + maxClips.ToString();
+        playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
 
         currenAmmo = maxAmmo;
+        reloadAmmo.enabled = false;
         isreloding = false;
     }
 
     private void Shoot()
     {
         currenAmmo--;
-        playerAmmo.text = "Ammo: " + currenAmmo + " / " + maxClips.ToString();
+        playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
 
         Instantiate(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идем выстрел и нужное вращение
         nextFire = fireRotate;
@@ -136,8 +143,9 @@ public class Player : MonoBehaviour
         {
             playerHealthText.text = "Player: Dead";
             animator.SetTrigger("Death");
-            gameManager.RestartGame();
             coll2D.enabled = false;
+            gameManager.RestartGame();
+
         }
 
     }
