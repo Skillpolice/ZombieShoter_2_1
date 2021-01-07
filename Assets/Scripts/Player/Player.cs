@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    Zombie zombie;
-    Enemy enemy;
+    //Zombie zombie;
+    //Enemy enemy;
     Animator animator;
     CircleCollider2D coll2D;
     GameManager gameManager;
 
     [Header("Text")]
     public Text playerHealthText;
+    public Text playerAmmo;
 
     [Header("Bullet Obj")]
     public Bullet bulletPrefab;
@@ -22,6 +23,12 @@ public class Player : MonoBehaviour
     [Header("Bullet")]
     public float fireRotate; //частота стрельбы
     public int bullDamagePlayer;
+    public int maxAmmo;
+    public int maxClips;
+    public float reloadTime;
+    [HideInInspector]
+    public int currenAmmo = -1;
+    private bool isreloding = false;
 
     [Header("Player")]
     public int healthPlayer;
@@ -37,22 +44,41 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        enemy = FindObjectOfType<Enemy>();
-        zombie = FindObjectOfType<Zombie>();
+        //enemy = FindObjectOfType<Enemy>();
+        //zombie = FindObjectOfType<Zombie>();
+
+        currenAmmo = maxAmmo;
 
         playerHealthText.text = "Player: " + healthPlayer.ToString();
+        playerAmmo.text = "Ammo: " + currenAmmo + " / " + maxClips.ToString();
     }
 
     private void Update()
     {
         //Debug.DrawRay(transform.position, (shootPosBullet.transform.position - transform.position) * 10, Color.green);
+       
         CheckFire();
     }
 
-    private void CheckFire()
+    public void CheckFire()
     {
         if (healthPlayer > 0)
         {
+            if (isreloding)
+            {
+                return;
+            }
+            if (currenAmmo <= 0)
+            {
+                StartCoroutine(ReloadFire());
+                return;
+            }
+            if (maxClips < 0)
+            {
+                StopCoroutine(ReloadFire());
+                return;
+            }
+
             if (Input.GetButtonDown("Fire1") && nextFire <= 0)
             {
                 Shoot();
@@ -68,11 +94,31 @@ public class Player : MonoBehaviour
         }
     }
 
+    IEnumerator ReloadFire()
+    {
+        isreloding = true;
+
+        print("Reloading..");
+
+        maxClips--;
+
+        yield return new WaitForSeconds(reloadTime);
+
+        playerAmmo.text = "Ammo: " + currenAmmo + " / " + maxClips.ToString();
+
+        currenAmmo = maxAmmo;
+        isreloding = false;
+    }
+
     private void Shoot()
     {
+        currenAmmo--;
+        playerAmmo.text = "Ammo: " + currenAmmo + " / " + maxClips.ToString();
+
         Instantiate(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идем выстрел и нужное вращение
         nextFire = fireRotate;
         animator.SetTrigger("Attack");
+
     }
 
 

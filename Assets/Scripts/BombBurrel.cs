@@ -23,7 +23,6 @@ public class BombBurrel : MonoBehaviour
         //TODO check tag Bullet
         if (collision.gameObject.CompareTag("BulletPlayer"))
         {
-
             Explode();
         }
     }

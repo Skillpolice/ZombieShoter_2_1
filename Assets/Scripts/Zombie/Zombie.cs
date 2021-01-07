@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Zombie : MonoBehaviour
 {
@@ -9,6 +9,8 @@ public class Zombie : MonoBehaviour
     Animator animator;
     ZombieMovement movement;
     CircleCollider2D coll2D;
+
+    public Action HealthChange = delegate { }; //delegate {} - пустое действие ,что бы не было ошибки в случае, если никто не подпишеться
 
     [Header("Zones")]
     public float attackRadius = 4f;
@@ -71,6 +73,7 @@ public class Zombie : MonoBehaviour
             Instantiate(pickaupPrefab, transform.position, Quaternion.identity);
             return;
         }
+        HealthChange(); //высоз события
     }
 
 
@@ -110,19 +113,23 @@ public class Zombie : MonoBehaviour
         {
             case ZombieState.STAND:
                 movement.enabled = false;
+                //zombiePatrol.enabled = true;
                 break;
 
             case ZombieState.MOVE_TO_PLAYER:
                 movement.enabled = true;
+                //zombiePatrol.enabled = false;
                 break;
 
             case ZombieState.ATTACK:
                 movement.enabled = false;
+                //zombiePatrol.enabled = false;
                 break;
 
             case ZombieState.RETURN:
                 movement.targetPos = startPosZombie;
                 movement.enabled = true;
+                //zombiePatrol.enabled = true;
                 break;
         }
         activeState = newState;
