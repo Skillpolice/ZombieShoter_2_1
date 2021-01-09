@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
     {
         //Debug.DrawRay(transform.position, (shootPosBullet.transform.position - transform.position) * 10, Color.green);
 
+        playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
         CheckFire();
     }
 
@@ -75,12 +76,20 @@ public class Player : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.R))
                 {
                     StartCoroutine(ReloadFire());
-                    return;
                 }
                 return;
             }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                if (currenAmmo > 0)
+                {
+                    StartCoroutine(ReloadFire());
+                }
+
+            }
             if (maxClips < 0)
             {
+                playerAmmo.text = "0 / 0";
                 StopCoroutine(ReloadFire());
                 return;
             }
@@ -143,8 +152,9 @@ public class Player : MonoBehaviour
         {
             playerHealthText.text = "Player: Dead";
             animator.SetTrigger("Death");
-            coll2D.enabled = false;
+            
             gameManager.RestartGame();
+            coll2D.enabled = false;
 
         }
 
