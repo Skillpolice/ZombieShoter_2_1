@@ -27,7 +27,11 @@ public class ZombieUi : MonoBehaviour
     private void Update()
     {
         healthSlider.value = zombie.healthZombie;
-        transform.rotation = Quaternion.identity; //поворот в мире 0
         //slide2.fillAmount = zombie.healthZombie / 100;
+    }
+
+    private void LateUpdate()
+    {
+        transform.rotation = Quaternion.identity; //поворот в мире 0
     }
 }
