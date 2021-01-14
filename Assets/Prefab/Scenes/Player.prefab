@@ -465,10 +465,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -533,7 +533,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3549941428205346120}
   - component: {fileID: 3549941428205346123}
-  - component: {fileID: 444169481532436876}
   - component: {fileID: 3549941428205346122}
   - component: {fileID: 3549941428205346134}
   - component: {fileID: 3549941428205346135}
@@ -613,21 +612,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &444169481532436876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3549941428205346124}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3f5872a365bdfa4ea0001ec8d12fa1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 3549941428205346134}
-  healthSlider: {fileID: 6728913270580260339}
-  ammoSlider: {fileID: 635375959767602922}
 --- !u!114 &3549941428205346122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -653,7 +637,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2507cb6f52a7a9343afa3f7b8bd62aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealthText: {fileID: 0}
   playerAmmo: {fileID: 6843320846149520519}
   reloadAmmo: {fileID: 7441534361534531641}
   bulletPrefab: {fileID: 8930928132991509566, guid: fdeb6b3c72a18864aa65bf9dc63a6629, type: 3}

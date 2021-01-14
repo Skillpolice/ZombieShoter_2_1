@@ -5,13 +5,16 @@ using UnityEngine;
 public class PickUpPharmacy : MonoBehaviour
 {
     Player player;
+    MainUI mainUI;
     public int healthUp;
 
-    private void ApplyEffect()
+    public void ApplyEffect()
     {
+        mainUI = FindObjectOfType<MainUI>();
         player = FindObjectOfType<Player>();
+        
         player.healthPlayer += healthUp;
-        player.playerHealthText.text = "Player: " + player.healthPlayer.ToString();
+        mainUI.playerHealth.value += healthUp;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

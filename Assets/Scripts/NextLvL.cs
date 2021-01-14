@@ -13,10 +13,11 @@ public class NextLvL : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
 
-        healthBoss-= player.bullDamagePlayer;
-        if(healthBoss <= 0)
+        healthBoss -= player.bullDamagePlayer;
+        if (healthBoss <= 0)
         {
             LoadScene();
+
         }
 
     }
@@ -24,10 +25,8 @@ public class NextLvL : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            LoadScene();
+            ApplyEffect();
         }
-
-        ApplyEffect();
     }
 
     private void LoadScene()

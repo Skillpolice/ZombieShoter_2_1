@@ -8,14 +8,14 @@ public class ZombieUi : MonoBehaviour
     public Zombie zombie;
     public Slider healthSlider;
 
-    public Image slide2;
+    //public Image slide2;
 
     private void Start()
     {
+        zombie.HealthChange += UpdateHealthBar;
+
         healthSlider.maxValue = zombie.healthZombie;
         healthSlider.value = zombie.healthZombie;
-
-        zombie.HealthChange += UpdateHealthBar;
     }
 
     public void UpdateHealthBar()
@@ -26,10 +26,8 @@ public class ZombieUi : MonoBehaviour
 
     private void Update()
     {
-        //healthSlider.value = zombie.healthZombie;
+        healthSlider.value = zombie.healthZombie;
         transform.rotation = Quaternion.identity; //поворот в мире 0
-
-
         //slide2.fillAmount = zombie.healthZombie / 100;
     }
 }

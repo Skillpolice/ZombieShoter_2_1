@@ -12,10 +12,11 @@ public class Zombie : MonoBehaviour
 
     public Action HealthChange = delegate { }; //delegate {} - пустое действие ,что бы не было ошибки в случае, если никто не подпишеться
 
-    [Header("Zones")]
+    [Header("Zones UI")]
     public float attackRadius = 4f;
     public float moveRadius = 10f;
     public float saveZone = 17f;
+    public int viewAngle = 90;
 
     [Header("Zombie")]
     public GameObject pickaupPrefab;
@@ -42,12 +43,16 @@ public class Zombie : MonoBehaviour
         coll2D = GetComponent<CircleCollider2D>();
         movement = GetComponent<ZombieMovement>();
     }
+
+
     void Start()
     {
         player = FindObjectOfType<Player>();
-        startPosZombie = transform.position; //запоменаем стартовую позицию зомби
 
+        startPosZombie = transform.position; //запоменаем стартовую позицию зомби
         ChangeState(ZombieState.STAND); //Делаем активный стейт
+
+        player.OnDeath += PlayerIsDied;
     }
 
     private void Update()
@@ -61,21 +66,6 @@ public class Zombie : MonoBehaviour
             UpdateHealth(player.bullDamagePlayer);
         }
     }
-
-    public void UpdateHealth(int amount)
-    {
-        healthZombie -= amount;
-
-        if (healthZombie <= 0)
-        {
-            animator.SetTrigger("Death");
-            coll2D.enabled = false;
-            Instantiate(pickaupPrefab, transform.position, Quaternion.identity);
-            return;
-        }
-        HealthChange(); //высоз события
-    }
-
 
     public void DistanceZombie()
     {
@@ -132,12 +122,15 @@ public class Zombie : MonoBehaviour
 
     private void DoStand()
     {
-        CheckMoveToPlayer();
+        if (player.healthPlayer > 0)
+        {
+            CheckMoveToPlayer();
+        }
     }
 
     private void DoReturn()
     {
-        if (CheckMoveToPlayer())
+        if (player.healthPlayer > 0 && CheckMoveToPlayer())
         {
             return;
         }
@@ -161,6 +154,13 @@ public class Zombie : MonoBehaviour
         //проверяем препядствия
         Vector3 directionToPlayer = player.transform.position - transform.position; //получаем направление от зомби к игроку
         Debug.DrawRay(transform.position, directionToPlayer, Color.red); //Рисует линию от точки А до точки B
+
+        float angle = Vector3.Angle(-transform.up, directionToPlayer);
+        if (angle > viewAngle / 2)
+        {
+            return false;
+        }
+
 
         LayerMask layerMask = LayerMask.GetMask("Walls");
         RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToPlayer, directionToPlayer.magnitude, layerMask);
@@ -191,7 +191,7 @@ public class Zombie : MonoBehaviour
     }
     private void DoAttack()
     {
-        if(player.healthPlayer > 0)
+        if (player.healthPlayer > 0)
         {
             if (distanceToPlayer > attackRadius)
             {
@@ -215,9 +215,28 @@ public class Zombie : MonoBehaviour
             return;
         }
         player.UpdateHealth(bullDamageZombie);
-        print("attack");
+    }
+    public void UpdateHealth(int amount)
+    {
+        healthZombie -= amount;
+
+        if (healthZombie <= 0)
+        {
+            animator.SetTrigger("Death");
+            Instantiate(pickaupPrefab, transform.position * 1.03f, Quaternion.identity);
+            coll2D.enabled = false;
+
+            player.OnDeath -= PlayerIsDied;
+
+            return;
+        }
+        HealthChange(); //высоз события
     }
 
+    private void PlayerIsDied()
+    {
+        ChangeState(ZombieState.RETURN);
+    }
 
     private void OnDrawGizmos()
     {

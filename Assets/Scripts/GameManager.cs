@@ -31,14 +31,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        playerMoneyText.text = "Money: 000";
-        DontDestroyOnLoad(gameObject);
+        //playerMoneyText.text = "Money: 000";
+        //DontDestroyOnLoad(gameObject);
     }
 
     public void AddMoney(int money)
     {
         scoreMoney += money;
-        playerMoneyText.text = "Money: " + scoreMoney.ToString();
+        //playerMoneyText.text = "Money: " + scoreMoney.ToString();
     }
 
     public void RestartGame()

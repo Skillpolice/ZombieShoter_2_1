@@ -18,10 +18,7 @@ public class ZombieMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         zombie = GetComponent<Zombie>();
     }
-    void Start()
-    {
 
-    }
     private void Update()
     {
         if (zombie.healthZombie > 0)
@@ -29,11 +26,6 @@ public class ZombieMovement : MonoBehaviour
             Move();
             Rotate();
         }
-        else
-        {
-            return;
-        }
-
     }
 
     public void Move()

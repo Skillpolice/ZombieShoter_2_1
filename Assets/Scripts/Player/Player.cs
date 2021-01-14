@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -12,8 +11,11 @@ public class Player : MonoBehaviour
     CircleCollider2D coll2D;
     GameManager gameManager;
 
+    public Action OnHealthChange = delegate { }; //пустой делегат ,что бы не выскакивало ошибок
+    public Action OnDeath = delegate { };
+
     [Header("Text")]
-    public Text playerHealthText;
+    //public Text playerHealthText;
     public Text playerAmmo;
     public Text reloadAmmo;
 
@@ -50,7 +52,7 @@ public class Player : MonoBehaviour
 
         currenAmmo = maxAmmo;
 
-        playerHealthText.text = "Player: " + healthPlayer.ToString();
+        //playerHealthText.text = "Player: " + healthPlayer.ToString();
         playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
     }
 
@@ -81,7 +83,7 @@ public class Player : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
-                if (currenAmmo > 0)
+                if (currenAmmo < maxAmmo)
                 {
                     StartCoroutine(ReloadFire());
                 }
@@ -112,7 +114,6 @@ public class Player : MonoBehaviour
     IEnumerator ReloadFire()
     {
         isreloding = true;
-
         print("Reloading..");
 
         maxClips--;
@@ -141,21 +142,14 @@ public class Player : MonoBehaviour
     public void UpdateHealth(int amount)
     {
         healthPlayer -= amount;
+        OnHealthChange();
 
-        playerHealthText.text = "Player: " + healthPlayer.ToString();
-
-        if (healthPlayer <= 50)
-        {
-            playerHealthText.color = Color.red;
-        }
         if (healthPlayer <= 0)
         {
-            playerHealthText.text = "Player: Dead";
             animator.SetTrigger("Death");
-            
-            gameManager.RestartGame();
+            //gameManager.RestartGame();
             coll2D.enabled = false;
-
+            OnDeath();
         }
 
     }
