@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Zombie : MonoBehaviour
 {
     Player player;
     Animator animator;
-    ZombieMovement movement;
+    AIPath aiPath;
+    AIDestinationSetter aIDestinationSetter;
     CircleCollider2D coll2D;
 
     public Action HealthChange = delegate { }; //delegate {} - пустое действие ,что бы не было ошибки в случае, если никто не подпишеться
@@ -41,7 +43,8 @@ public class Zombie : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         coll2D = GetComponent<CircleCollider2D>();
-        movement = GetComponent<ZombieMovement>();
+        aiPath = GetComponent<AIPath>();
+        aIDestinationSetter = GetComponent<AIDestinationSetter>();
     }
 
 
@@ -71,30 +74,23 @@ public class Zombie : MonoBehaviour
     public void DistanceZombie()
     {
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        if (healthZombie > 0)
+
+        switch (activeState)
         {
-            switch (activeState)
-            {
-                case ZombieState.STAND:
-                    DoStand();
-                    break;
-                case ZombieState.MOVE_TO_PLAYER:
-                    DoMove();
-                    break;
-                case ZombieState.ATTACK:
-                    DoAttack();
-                    break;
-                case ZombieState.RETURN:
-                    DoReturn();
-                    break;
-            }
+            case ZombieState.STAND:
+                DoStand();
+                break;
+            case ZombieState.MOVE_TO_PLAYER:
+                DoMove();
+                break;
+            case ZombieState.ATTACK:
+                DoAttack();
+                break;
+            case ZombieState.RETURN:
+                DoReturn();
+                break;
         }
-        else
-        {
-            movement.OnDisable();
-            movement.enabled = false;
-            return;
-        }
+
     }
 
     private void ChangeState(ZombieState newState)
@@ -102,20 +98,21 @@ public class Zombie : MonoBehaviour
         switch (newState)
         {
             case ZombieState.STAND:
-                movement.enabled = false;
+                aiPath.enabled = false;
                 break;
 
             case ZombieState.MOVE_TO_PLAYER:
-                movement.enabled = true;
+                aIDestinationSetter.target = player.transform;
+                aiPath.enabled = true;
                 break;
 
             case ZombieState.ATTACK:
-                movement.enabled = false;
+                aiPath.enabled = false;
                 break;
 
             case ZombieState.RETURN:
-                movement.targetPos = startPosZombie;
-                movement.enabled = true;
+                aiPath.transform.position = startPosZombie;
+                aiPath.enabled = true;
                 break;
         }
         activeState = newState;
@@ -188,24 +185,21 @@ public class Zombie : MonoBehaviour
             ChangeState(ZombieState.RETURN);
             return;
         }
-        movement.targetPos = player.transform.position;
     }
     private void DoAttack()
     {
-        if (player.healthPlayer > 0)
-        {
-            if (distanceToPlayer > attackRadius)
-            {
-                ChangeState(ZombieState.MOVE_TO_PLAYER);
-                return;
-            }
 
-            hitNexAttack -= Time.deltaTime;
-            if (hitNexAttack < 0)
-            {
-                animator.SetTrigger("Attack");
-                hitNexAttack = hitRotate;
-            }
+        if (distanceToPlayer > attackRadius)
+        {
+            ChangeState(ZombieState.MOVE_TO_PLAYER);
+            return;
+        }
+
+        hitNexAttack -= Time.deltaTime;
+        if (hitNexAttack < 0)
+        {
+            animator.SetTrigger("Attack");
+            hitNexAttack = hitRotate;
         }
     }
 
