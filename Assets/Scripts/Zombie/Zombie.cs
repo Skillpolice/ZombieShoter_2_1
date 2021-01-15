@@ -64,6 +64,7 @@ public class Zombie : MonoBehaviour
         if (collision.gameObject.CompareTag("BulletPlayer"))
         {
             UpdateHealth(player.bullDamagePlayer);
+            ChangeState(ZombieState.MOVE_TO_PLAYER);
         }
     }
 
