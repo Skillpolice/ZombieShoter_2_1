@@ -6,11 +6,13 @@ using Pathfinding;
 
 public class Zombie : MonoBehaviour
 {
+    Rigidbody2D rb;
     Player player;
     Animator animator;
     AIPath aiPath;
     AIDestinationSetter aIDestinationSetter;
     CircleCollider2D coll2D;
+    WanderingZombie wandering;
 
     public Action HealthChange = delegate { }; //delegate {} - пустое действие ,что бы не было ошибки в случае, если никто не подпишеться
 
@@ -32,19 +34,23 @@ public class Zombie : MonoBehaviour
     float distanceToPlayer;
 
     ZombieState activeState;
+
     enum ZombieState //проверка состояний зомби
     {
         STAND,
         RETURN,
         MOVE_TO_PLAYER,
+        PATROOL,
         ATTACK
     }
     void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         coll2D = GetComponent<CircleCollider2D>();
         aiPath = GetComponent<AIPath>();
         aIDestinationSetter = GetComponent<AIDestinationSetter>();
+        wandering = GetComponent<WanderingZombie>();
     }
 
 
@@ -62,12 +68,16 @@ public class Zombie : MonoBehaviour
     {
         DistanceZombie();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("BulletPlayer"))
         {
             UpdateHealth(player.bullDamagePlayer);
-            ChangeState(ZombieState.MOVE_TO_PLAYER);
+            if (distanceToPlayer > moveRadius)
+            {
+                ChangeState(ZombieState.MOVE_TO_PLAYER);
+            }
         }
     }
 
@@ -75,22 +85,30 @@ public class Zombie : MonoBehaviour
     {
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-        switch (activeState)
+        if (healthZombie > 0)
         {
-            case ZombieState.STAND:
-                DoStand();
-                break;
-            case ZombieState.MOVE_TO_PLAYER:
-                DoMove();
-                break;
-            case ZombieState.ATTACK:
-                DoAttack();
-                break;
-            case ZombieState.RETURN:
-                DoReturn();
-                break;
+            switch (activeState)
+            {
+                case ZombieState.STAND:
+                    DoStand();
+                    break;
+                case ZombieState.MOVE_TO_PLAYER:
+                    DoMove();
+                    break;
+                case ZombieState.ATTACK:
+                    DoAttack();
+                    break;
+                case ZombieState.RETURN:
+                    DoReturn();
+                    break;
+            }
         }
-
+        else
+        {
+            rb.velocity = Vector2.zero;
+            aiPath.enabled = false;
+            return;
+        }
     }
 
     private void ChangeState(ZombieState newState)
@@ -98,21 +116,25 @@ public class Zombie : MonoBehaviour
         switch (newState)
         {
             case ZombieState.STAND:
-                aiPath.enabled = false;
+                wandering.enabled = true;
+                //aiPath.enabled = false;
                 break;
 
             case ZombieState.MOVE_TO_PLAYER:
                 aIDestinationSetter.target = player.transform;
                 aiPath.enabled = true;
+                wandering.enabled = false;
                 break;
 
             case ZombieState.ATTACK:
                 aiPath.enabled = false;
+                wandering.enabled = false;
                 break;
 
             case ZombieState.RETURN:
                 aiPath.transform.position = startPosZombie;
                 aiPath.enabled = true;
+                wandering.enabled = true;
                 break;
         }
         activeState = newState;
@@ -186,6 +208,7 @@ public class Zombie : MonoBehaviour
             return;
         }
     }
+
     private void DoAttack()
     {
 
@@ -222,7 +245,6 @@ public class Zombie : MonoBehaviour
             coll2D.enabled = false;
 
             player.OnDeath -= PlayerIsDied;
-
             return;
         }
         HealthChange(); //высоз события
@@ -243,5 +265,14 @@ public class Zombie : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, saveZone);
+
+
+        Gizmos.color = Color.cyan;
+        Vector3 loodDirection = -transform.up; //направления взгляда
+        Vector3 leftViewVector = Quaternion.AngleAxis(viewAngle / 2, Vector3.forward) * loodDirection;
+        Vector3 rightViewVector = Quaternion.AngleAxis(-viewAngle / 2, Vector3.forward) * loodDirection;
+
+        Gizmos.DrawRay(transform.position, leftViewVector * moveRadius);
+        Gizmos.DrawRay(transform.position, rightViewVector * moveRadius);
     }
 }

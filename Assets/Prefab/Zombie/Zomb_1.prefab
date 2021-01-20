@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1068547747646552028}
   - component: {fileID: 1068547747646552031}
   - component: {fileID: 1068547747646552026}
+  - component: {fileID: 5836596852821473617}
   - component: {fileID: 1068547747646552029}
   - component: {fileID: 1068547747646552025}
   - component: {fileID: 1592208475}
@@ -18,7 +19,6 @@ GameObject:
   - component: {fileID: 2397895431291321984}
   - component: {fileID: 7579879752092166468}
   - component: {fileID: 1851580310}
-  - component: {fileID: 5836596852821473617}
   m_Layer: 7
   m_Name: Zomb_1
   m_TagString: Zombie
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068547747646552030}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43352f77f4fa2d438699e78678587bf, type: 3}
   m_Name: 
@@ -107,11 +107,24 @@ MonoBehaviour:
   attackRadius: 3.81
   moveRadius: 16.26
   saveZone: 21.41
-  viewAngle: 180
+  viewAngle: 70
   pickaupPrefab: {fileID: 7765052949754866717, guid: 050b7c23c3fd1e047a5eb55116aa6baf, type: 3}
   healthZombie: 100
   hitRotate: 1
   bullDamageZombie: 5
+--- !u!114 &5836596852821473617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068547747646552030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 915b4f0f32a188b4c8924b7da0e6b425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 20
 --- !u!95 &1068547747646552029
 Animator:
   serializedVersion: 3
@@ -159,7 +172,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 50
+  m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -186,7 +199,7 @@ MonoBehaviour:
   repathRate: 0.2
   canSearch: 1
   canMove: 1
-  maxSpeed: 5
+  maxSpeed: 7
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -268,19 +281,6 @@ MonoBehaviour:
   bezierTangentLength: 0.4
   offset: 0.2
   factor: 0.1
---- !u!114 &5836596852821473617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068547747646552030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 915b4f0f32a188b4c8924b7da0e6b425, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 20
 --- !u!1 &2558863569619483080
 GameObject:
   m_ObjectHideFlags: 0

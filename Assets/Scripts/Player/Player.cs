@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Lean.Pool;
 
 public class Player : MonoBehaviour
 {
@@ -132,7 +133,7 @@ public class Player : MonoBehaviour
         currenAmmo--;
         playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
 
-        Instantiate(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идем выстрел и нужное вращение
+        LeanPool.Spawn(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идем выстрел и нужное вращение
         nextFire = fireRotate;
         animator.SetTrigger("Attack");
 
