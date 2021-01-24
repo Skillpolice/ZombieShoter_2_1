@@ -30,7 +30,8 @@ public class Zombie : MonoBehaviour
     float hitNexAttack;
 
 
-    Vector3 startPosZombie;
+    Transform startTransform;
+    //Vector3 startPosZombie;
     float distanceToPlayer;
 
     ZombieState activeState;
@@ -58,10 +59,13 @@ public class Zombie : MonoBehaviour
     {
         player = FindObjectOfType<Player>();
 
-        startPosZombie = transform.position; //запоменаем стартовую позицию зомби
         ChangeState(ZombieState.STAND); //Делаем активный стейт
 
         player.OnDeath += PlayerIsDied;
+
+        GameObject startPosGO = new GameObject(name + "_StartPosition "); //создаем новый обьект стартовой позиции зомби
+        startPosGO.transform.position = transform.position;
+        startTransform = startPosGO.transform; //запоменаем стартовую позицию зомби
     }
 
     private void Update()
@@ -74,7 +78,7 @@ public class Zombie : MonoBehaviour
         if (collision.gameObject.CompareTag("BulletPlayer"))
         {
             UpdateHealth(player.bullDamagePlayer);
-            if (distanceToPlayer > moveRadius)
+            if (distanceToPlayer > attackRadius)
             {
                 ChangeState(ZombieState.MOVE_TO_PLAYER);
             }
@@ -132,7 +136,8 @@ public class Zombie : MonoBehaviour
                 break;
 
             case ZombieState.RETURN:
-                //aiPath.transform.position = startPosZombie;
+                aIDestinationSetter.target = startTransform;
+                //aiPath.destination = startTransform.position;
                 aiPath.enabled = true;
                 wandering.enabled = true;
                 break;
@@ -155,7 +160,7 @@ public class Zombie : MonoBehaviour
             return;
         }
 
-        float distanseToStart = Vector3.Distance(transform.position, startPosZombie);
+        float distanseToStart = Vector3.Distance(transform.position, startTransform.position);
         if (distanseToStart <= 0.1f)
         {
             ChangeState(ZombieState.STAND);
