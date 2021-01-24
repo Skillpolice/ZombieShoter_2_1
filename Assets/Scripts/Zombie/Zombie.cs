@@ -234,6 +234,7 @@ public class Zombie : MonoBehaviour
         }
         player.UpdateHealth(bullDamageZombie);
     }
+
     public void UpdateHealth(int amount)
     {
         healthZombie -= amount;

@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
         currenAmmo--;
         playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
 
-        LeanPool.Spawn(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идем выстрел и нужное вращение
+        LeanPool.Spawn(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идет выстрел и нужное вращение
         nextFire = fireRotate;
         animator.SetTrigger("Attack");
 

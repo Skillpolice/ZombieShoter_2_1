@@ -29,7 +29,7 @@ public class NextLvL : MonoBehaviour
         }
     }
 
-    private void LoadScene()
+    public void LoadScene()
     {
         index = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(index + 1);
