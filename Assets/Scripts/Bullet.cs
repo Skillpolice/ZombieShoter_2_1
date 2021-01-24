@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Lean.Pool;
 
 public class Bullet : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Bullet : MonoBehaviour
         player = GetComponent<Player>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         rb.velocity = -transform.up * bullSpeed; //Скорость пули - стреляет куда смотрит
     }
@@ -40,6 +41,6 @@ public class Bullet : MonoBehaviour
 
     private void OnBecameInvisible() //Уничтожение обьектов за пределы камеры
     {
-        Destroy(gameObject);
+       LeanPool.Despawn(gameObject);
     }
 }

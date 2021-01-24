@@ -132,7 +132,7 @@ public class Zombie : MonoBehaviour
                 break;
 
             case ZombieState.RETURN:
-                aiPath.transform.position = startPosZombie;
+                //aiPath.transform.position = startPosZombie;
                 aiPath.enabled = true;
                 wandering.enabled = true;
                 break;
