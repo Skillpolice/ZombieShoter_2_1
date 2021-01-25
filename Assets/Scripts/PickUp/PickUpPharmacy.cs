@@ -6,13 +6,17 @@ public class PickUpPharmacy : MonoBehaviour
 {
     Player player;
     MainUI mainUI;
+
     public int healthUp;
+
+    private void Start()
+    {
+        mainUI = MainUI.Instance;
+        player = Player.Instance;
+    }
 
     public void ApplyEffect()
     {
-        mainUI = FindObjectOfType<MainUI>();
-        player = FindObjectOfType<Player>();
-        
         player.healthPlayer += healthUp;
         mainUI.playerHealth.value += healthUp;
     }

@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     CircleCollider2D coll2D;
     GameManager gameManager;
 
+    public static Player Instance;
+
     public Action OnHealthChange = delegate { }; //пустой делегат ,что бы не выскакивало ошибок
     public Action OnDeath = delegate { };
 
@@ -45,6 +47,8 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         coll2D = GetComponent<CircleCollider2D>();
         gameManager = GetComponent<GameManager>();
+
+        Instance = this;
     }
     private void Start()
     {

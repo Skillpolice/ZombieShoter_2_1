@@ -9,6 +9,9 @@ public class MainUI : MonoBehaviour
 {
     Player player;
 
+    public static MainUI Instance;
+
+
     [Header("Game Obj")]
     public GameObject gameOverPanel;
 
@@ -17,9 +20,14 @@ public class MainUI : MonoBehaviour
     public Slider playerAmmo;
     //TODO public Image playerPortrait;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = Player.Instance;
         player.OnHealthChange += UpdateHealth; //делегат события изменения здоровья
         player.OnDeath += ShowGameOver;
 

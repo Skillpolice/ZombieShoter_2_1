@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = Player.Instance;
     }
 
     private void Update() // Движение персонажа

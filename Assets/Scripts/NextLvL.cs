@@ -9,15 +9,17 @@ public class NextLvL : MonoBehaviour
 
     public int healthBoss;
     int index;
+
+    private void Start()
+    {
+        player = Player.Instance;
+    }
     private void ApplyEffect()
     {
-        player = FindObjectOfType<Player>();
-
         healthBoss -= player.bullDamagePlayer;
         if (healthBoss <= 0)
         {
             LoadScene();
-
         }
 
     }

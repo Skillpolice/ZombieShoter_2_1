@@ -107,7 +107,7 @@ MonoBehaviour:
   attackRadius: 3.81
   moveRadius: 16.26
   saveZone: 21.41
-  viewAngle: 70
+  viewAngle: 90
   pickaupPrefab: {fileID: 7765052949754866717, guid: 050b7c23c3fd1e047a5eb55116aa6baf, type: 3}
   healthZombie: 100
   hitRotate: 1
@@ -199,7 +199,7 @@ MonoBehaviour:
   repathRate: 0.2
   canSearch: 1
   canMove: 1
-  maxSpeed: 7
+  maxSpeed: 5
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2

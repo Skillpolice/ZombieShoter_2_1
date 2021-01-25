@@ -7,9 +7,12 @@ public class AmmoPickup : MonoBehaviour
     Player player;
     public int addAmmo;
 
+    private void Start()
+    {
+        player = Player.Instance;
+    }
     private void ApplyEffect()
     {
-        player = FindObjectOfType<Player>();
         player.maxClips += addAmmo;
         player.playerAmmo.text = "Ammo: " + player.currenAmmo + " / " + player.maxClips.ToString();
     }

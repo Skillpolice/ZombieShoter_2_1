@@ -41,7 +41,6 @@ public class Zombie : MonoBehaviour
         STAND,
         RETURN,
         MOVE_TO_PLAYER,
-        PATROOL,
         ATTACK
     }
     void Awake()
@@ -57,7 +56,7 @@ public class Zombie : MonoBehaviour
 
     void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = Player.Instance;
 
         ChangeState(ZombieState.STAND); //Делаем активный стейт
 

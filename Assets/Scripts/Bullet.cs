@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        player = GetComponent<Player>();
+        player = Player.Instance;
     }
 
     private void OnEnable()
