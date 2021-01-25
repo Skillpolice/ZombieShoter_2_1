@@ -41,7 +41,14 @@ public class Player : MonoBehaviour
     private bool isreloding = false;
 
     [Header("Player")]
-    public int healthPlayer;
+    [SerializeField]
+    private int healthPlayer;
+
+    public int HealthPlayer
+    {
+        get { return healthPlayer; }
+        set { healthPlayer = value; }
+    }
 
     float nextFire; //сколько прошло времени от предыдущего выстрела\
 

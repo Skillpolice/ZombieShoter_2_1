@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update() // Движение персонажа
     {
-        if (player.healthPlayer > 0)
+        if (player.HealthPlayer > 0)
         {
             Move();
             Rotate();

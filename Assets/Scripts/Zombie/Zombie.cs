@@ -146,7 +146,7 @@ public class Zombie : MonoBehaviour
 
     private void DoStand()
     {
-        if (player.healthPlayer > 0)
+        if (player.HealthPlayer > 0)
         {
             CheckMoveToPlayer();
         }
@@ -154,7 +154,7 @@ public class Zombie : MonoBehaviour
 
     private void DoReturn()
     {
-        if (player.healthPlayer > 0 && CheckMoveToPlayer())
+        if (player.HealthPlayer > 0 && CheckMoveToPlayer())
         {
             return;
         }

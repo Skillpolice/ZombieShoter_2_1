@@ -11,7 +11,6 @@ public class MainUI : MonoBehaviour
 
     public static MainUI Instance;
 
-
     [Header("Game Obj")]
     public GameObject gameOverPanel;
 
@@ -31,8 +30,8 @@ public class MainUI : MonoBehaviour
         player.OnHealthChange += UpdateHealth; //делегат события изменения здоровья
         player.OnDeath += ShowGameOver;
 
-        playerHealth.maxValue = player.healthPlayer;
-        playerHealth.value = player.healthPlayer;
+        playerHealth.maxValue = player.HealthPlayer;
+        playerHealth.value = player.HealthPlayer;
 
         playerAmmo.maxValue = player.maxAmmo;
         playerAmmo.value = player.currenAmmo;
@@ -50,7 +49,7 @@ public class MainUI : MonoBehaviour
 
     private void UpdateHealth()
     {
-        playerHealth.value = player.healthPlayer;
+        playerHealth.value = player.HealthPlayer;
     }
 
 }

@@ -11,8 +11,8 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
-        healthSlider.maxValue = player.healthPlayer;
-        healthSlider.value = player.healthPlayer;
+        healthSlider.maxValue = player.HealthPlayer;
+        healthSlider.value = player.HealthPlayer;
 
         ammoSlider.maxValue = player.maxAmmo;
         ammoSlider.value = player.currenAmmo;
@@ -20,7 +20,7 @@ public class PlayerUI : MonoBehaviour
 
     private void Update()
     {
-        healthSlider.value = player.healthPlayer;
+        healthSlider.value = player.HealthPlayer;
 
         ammoSlider.value = player.currenAmmo;
     }

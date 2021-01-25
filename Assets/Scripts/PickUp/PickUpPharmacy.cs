@@ -17,7 +17,7 @@ public class PickUpPharmacy : MonoBehaviour
 
     public void ApplyEffect()
     {
-        player.healthPlayer += healthUp;
+        player.HealthPlayer += healthUp;
         mainUI.playerHealth.value += healthUp;
     }
     private void OnTriggerEnter2D(Collider2D collision)
