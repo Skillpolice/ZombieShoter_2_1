@@ -12,7 +12,11 @@ public class Player : MonoBehaviour
     CircleCollider2D coll2D;
     GameManager gameManager;
 
-    public static Player Instance;
+    private static Player instance;
+    public static Player Instance
+    {
+        get { return instance; }
+    }
 
     public Action OnHealthChange = delegate { }; //пустой делегат ,что бы не выскакивало ошибок
     public Action OnDeath = delegate { };
@@ -26,7 +30,7 @@ public class Player : MonoBehaviour
     public Bullet bulletPrefab;
     public GameObject shootPosBullet;
 
-    [Header("Bullet")]
+    [Header("Gun")]
     public float fireRotate; //частота стрельбы
     public int bullDamagePlayer;
     public int maxAmmo;
@@ -48,7 +52,7 @@ public class Player : MonoBehaviour
         coll2D = GetComponent<CircleCollider2D>();
         gameManager = GetComponent<GameManager>();
 
-        Instance = this;
+        instance = this;
     }
     private void Start()
     {
