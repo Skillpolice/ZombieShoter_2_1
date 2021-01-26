@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             player.UpdateHealth(bullDamage);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
@@ -35,12 +35,16 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Zombie") || collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Walls"))
         {
-            Destroy(gameObject);
+            LeanPool.Despawn(gameObject);
         }
     }
 
     private void OnBecameInvisible() //Уничтожение обьектов за пределы камеры
     {
-       LeanPool.Despawn(gameObject);
+        if (gameObject.activeSelf)
+        {
+            LeanPool.Despawn(gameObject);
+        }
+
     }
 }

@@ -29,7 +29,8 @@ public class Player : MonoBehaviour
 
     [Header("Bullet Obj")]
     public Bullet bulletPrefab;
-    public GameObject shootPosBullet;
+    public GameObject shootPosGun;
+
 
     [Header("Gun")]
     public float fireRotate; //частота стрельбы
@@ -38,12 +39,12 @@ public class Player : MonoBehaviour
     public int maxClips;
     public float reloadTime;
     [HideInInspector]
-    public int currenAmmo = -1;
+    public int currenAmmo = 0;
     private bool isreloding = false;
 
     [Header("Player")]
-    [SerializeField]
-    private int healthPlayer;
+    [SerializeField] private int healthPlayer;
+    public AnimatorOverrideController[] animatorOverrideController;
 
     public int HealthPlayer
     {
@@ -61,6 +62,12 @@ public class Player : MonoBehaviour
         coll2D = GetComponent<CircleCollider2D>();
         gameManager = GetComponent<GameManager>();
 
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         instance = this;
     }
     private void Start()
@@ -77,7 +84,10 @@ public class Player : MonoBehaviour
     private void Update()
     {
         //Debug.DrawRay(transform.position, (shootPosBullet.transform.position - transform.position) * 10, Color.green);
-
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            animator.runtimeAnimatorController = animatorOverrideController[0];
+        }
         playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
         CheckFire();
     }
@@ -93,23 +103,21 @@ public class Player : MonoBehaviour
             if (currenAmmo <= 0)
             {
                 reloadAmmo.enabled = true;
-                if (Input.GetKeyDown(KeyCode.R))
+                if (Input.GetKeyDown(KeyCode.R) && maxClips > 0)
                 {
                     StartCoroutine(ReloadFire());
                 }
                 return;
             }
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && maxClips > 0)
             {
                 if (currenAmmo < maxAmmo)
                 {
                     StartCoroutine(ReloadFire());
                 }
-
             }
             if (maxClips < 0)
             {
-                playerAmmo.text = "0 / 0";
                 StopCoroutine(ReloadFire());
                 return;
             }
@@ -143,21 +151,20 @@ public class Player : MonoBehaviour
         currenAmmo = maxAmmo;
         reloadAmmo.enabled = false;
         isreloding = false;
-    } 
+    }
 
     private void Shoot()
     {
         currenAmmo--;
         playerAmmo.text = currenAmmo + " / " + maxClips.ToString();
 
-        LeanPool.Spawn(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идет выстрел и нужное вращение
+        LeanPool.Spawn(bulletPrefab, shootPosGun.transform.position, transform.rotation); //Создание пули , префаб, откуда идет выстрел и нужное вращение
         nextFire = fireRotate;
 
         audioSource.Play();
         animator.SetTrigger("Attack");
 
     }
-
 
     public void UpdateHealth(int amount)
     {
@@ -171,6 +178,11 @@ public class Player : MonoBehaviour
             coll2D.enabled = false;
             OnDeath();
         }
+
+    }
+
+    private void OnDestroy()
+    {
 
     }
 

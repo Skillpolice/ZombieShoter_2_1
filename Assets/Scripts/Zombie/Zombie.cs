@@ -126,7 +126,6 @@ public class Zombie : MonoBehaviour
                 break;
 
             case ZombieState.MOVE_TO_PLAYER:
-                aIDestinationSetter.target = player.transform;
                 aiPath.enabled = true;
                 wandering.enabled = false;
                 break;
@@ -137,10 +136,8 @@ public class Zombie : MonoBehaviour
                 break;
 
             case ZombieState.RETURN:
-                aIDestinationSetter.target = startTransform;
-                //aiPath.destination = startTransform.position;
+                aiPath.destination = startTransform.position;
                 aiPath.enabled = true;
-                wandering.enabled = true;
                 break;
         }
         activeState = newState;
@@ -213,6 +210,8 @@ public class Zombie : MonoBehaviour
             ChangeState(ZombieState.RETURN);
             return;
         }
+
+        aiPath.destination = player.transform.position;
     }
 
     private void DoAttack()
@@ -244,17 +243,16 @@ public class Zombie : MonoBehaviour
     public void UpdateHealth(int amount)
     {
         healthZombie -= amount;
-
+        HealthChange();
         if (healthZombie <= 0)
         {
             animator.SetTrigger("Death");
             Instantiate(pickaupPrefab, transform.position * 1.03f, Quaternion.identity);
             coll2D.enabled = false;
-            audioSource.gameObject.SetActive(false);
             player.OnDeath -= PlayerIsDied;
             return;
         }
-        HealthChange(); //высоз события
+        //высоз события
     }
 
     private void PlayerIsDied()

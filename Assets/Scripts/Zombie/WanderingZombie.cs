@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WanderingZombie : MonoBehaviour
 {
-    public float radius = 20;
+    public float radius = 10;
 
     IAstarAI ai;
     void Start()

@@ -4,13 +4,12 @@ using UnityEngine;
 public class GridWater : MonoBehaviour
 {
     PlayerMovement playerMove;
-    AIPath aIpath;
 
     public float speedMove;
 
     private void Awake()
     {
-        aIpath = GetComponent<AIPath>();
+
     }
 
     private void CheckToSpeed()
@@ -30,6 +29,7 @@ public class GridWater : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Zombie"))
         {
+            AIPath aIpath = collision.GetComponent<AIPath>();
             aIpath.maxSpeed -= speedMove;
             print("Speed zombie -1");
         }
@@ -47,6 +47,7 @@ public class GridWater : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Zombie"))
         {
+            AIPath aIpath = collision.GetComponent<AIPath>();
             aIpath.maxSpeed += speedMove;
 
             print("Speed zombie -1");

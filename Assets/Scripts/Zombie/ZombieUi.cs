@@ -24,11 +24,11 @@ public class ZombieUi : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        healthSlider.value = zombie.healthZombie;
-        //slide2.fillAmount = zombie.healthZombie / 100;
-    }
+    //private void Update()
+    //{
+    //    healthSlider.value = zombie.healthZombie;
+    //    //slide2.fillAmount = zombie.healthZombie / 100;
+    //}
 
     private void LateUpdate()
     {
