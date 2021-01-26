@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     //Zombie zombie;
     //Enemy enemy;
     Animator animator;
+    AudioSource audioSource;
     CircleCollider2D coll2D;
     GameManager gameManager;
 
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         coll2D = GetComponent<CircleCollider2D>();
         gameManager = GetComponent<GameManager>();
@@ -141,7 +143,7 @@ public class Player : MonoBehaviour
         currenAmmo = maxAmmo;
         reloadAmmo.enabled = false;
         isreloding = false;
-    }
+    } 
 
     private void Shoot()
     {
@@ -150,6 +152,8 @@ public class Player : MonoBehaviour
 
         LeanPool.Spawn(bulletPrefab, shootPosBullet.transform.position, transform.rotation); //Создание пули , префаб, откуда идет выстрел и нужное вращение
         nextFire = fireRotate;
+
+        audioSource.Play();
         animator.SetTrigger("Attack");
 
     }

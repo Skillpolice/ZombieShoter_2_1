@@ -7,6 +7,7 @@ using Pathfinding;
 public class Zombie : MonoBehaviour
 {
     Rigidbody2D rb;
+    AudioSource audioSource;
     Player player;
     Animator animator;
     AIPath aiPath;
@@ -46,6 +47,7 @@ public class Zombie : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
         coll2D = GetComponent<CircleCollider2D>();
         aiPath = GetComponent<AIPath>();
@@ -248,7 +250,7 @@ public class Zombie : MonoBehaviour
             animator.SetTrigger("Death");
             Instantiate(pickaupPrefab, transform.position * 1.03f, Quaternion.identity);
             coll2D.enabled = false;
-
+            audioSource.gameObject.SetActive(false);
             player.OnDeath -= PlayerIsDied;
             return;
         }
